@@ -1,53 +1,44 @@
 import React, { useState } from "react";
 import Context from "./Context";
-
+import userData from "../Data/users.json"
+// import MainApp from "../MainApp";
 
 const Appstate = (props) => {
-    const [bills, setbills] = useState({ ifrom: '', ito: '', itransportCharge: '', iserviceCharge: '', iquantity: '', igst: '', total: '' })
-    const [total, settotal] = useState(0);
-    const [details, setdetails] = useState({ Tservice: 'Bablu Transport', Phnumber: '1234567890', address: 'balaji nagar shingave' })
+    const [items, setitems] = useState([])
+    const [totalAmt, settotalAmt] = useState(0)
+    const [details, setdetails] = useState({ Tservice: 'Amazon Transport', Phnumber: '1234567890', address: 'balaji nagar shingave' })
+  //  const [userDetails, setuserDetails] = useState(userData)
 
-    const items = [{
-        from: 'sfsdfdd',
-        to: 'fsffsdf',
-        transport_charge: 12,
-        service_charge: 12,
-        quantity: 5,
-        gst: 3,
-        total: 233
-    }
-        , {
-        from: 'sfsdfdd',
-        to: 'fsffsdf',
-        transport_charge: 12,
-        service_charge: 12,
-        quantity: 5,
-        gst: 3,
-        total: 233
-    }]
+    // const userLogin = (email, password)=>{
+    //     userDetails.map(items=>{
+    //         if(email === items.Email && password === items.Password){
+    //             <MainApp />
+    //           //  console.log(items)
+    //         }
+    // })
+    // }
 
-    const addBill = (from, to, transportCharge, serviceCharge, gst, quantity) => {
-        const Charge = parseInt(transportCharge);
-        const sCharge = parseInt(serviceCharge)
-        const Gst = parseInt(gst)
-        const totalBill = Charge + sCharge;
+    const addBill = (transportCharge, serviceCharge, gst, quantity) => {
+        const totalBill = parseInt(transportCharge) + parseInt(serviceCharge);
         const totalprice = totalBill * parseInt(quantity)
-        const gstAmmount = (totalprice * Gst) / 100;
+        const gstAmmount = (totalprice * parseInt(gst)) / 100;
         const netPrice = totalprice + gstAmmount
-        settotal(netPrice)
-        setbills({
-            ifrom: from,
-            ito: to,
-            itransportCharge: Charge,
-            iserviceCharge: sCharge,
-            iquantity: parseInt(quantity),
-            igst: Gst,
+        // settotal(netPrice);
+        const obj = {
+            id: items.length + 1,
+            itransportCharge: transportCharge,
+            iserviceCharge: serviceCharge,
+            iquantity: quantity,
+            igst: gst,
             total: netPrice
-        })
-        console.log(bills)
+        }
+        items.push([...items, obj])
+        settotalAmt(totalAmt + netPrice)
+        //console.log(totalAmt)
     }
+
     return (
-        <Context.Provider value={{ bills, addBill, total, details, setdetails }}>
+        <Context.Provider value={{ addBill, details, setdetails, Appstate, items, totalAmt, setitems, userData }}>
             {props.children}
         </Context.Provider>
     )

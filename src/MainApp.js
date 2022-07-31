@@ -1,21 +1,21 @@
 import React, { useContext, useState } from 'react'
 import { Print } from './Components/Print'
 import Context from './context/Context'
-const MainApp = (props) => {
-    const [inputs, setinputs] = useState({ from: '', to: '', transportCharge: '', serviceCharge: '', quantity: '', gst: '' })
+const MainApp = (props) => { 
+    const [inputs, setinputs] = useState({ from: '', to: '',transportCharge:'',serviceCharge:'',gst:'',quantity:''})
     const { addBill, total} = useContext(Context)
     const onchange = (e) => {
         setinputs({ ...inputs, [e.target.name]: e.target.value });
     }
     const onsubmit = (e) => {
         e.preventDefault();
-        addBill(inputs.from, inputs.to, inputs.transportCharge, inputs.serviceCharge, inputs.gst, inputs.quantity)
+        addBill(inputs.transportCharge, inputs.serviceCharge, inputs.gst, inputs.quantity)
     }
     return (
-        <div className='d-flex mt-5'>
+        <div className='d-flex mt-5 container'>
             <div className='w-50 bg-secondary bg-opacity-10 bg-gradient '>
                 <h2 style={{ textAlign: 'center'}}>Transport Service</h2>
-                <form className='row mt-2' onSubmit={onsubmit} >
+                <form className='row mt-2' >
                     <div className="mb-3 col-md-6">
                      <label htmlFor="From" className="form-label">From</label>
                         <input type="text" className="form-control" onChange={(onchange)} name='from' id="From" />
@@ -42,12 +42,10 @@ const MainApp = (props) => {
                     </div>
                     <div className="mb-3 col-md-12">
                         <label htmlFor="Total" className="form-label fs-5">Total: {total}</label>
-                    </div>
-                   
-                    <button className="btn btn-primary col-md-5 mx-auto ">Add</button>
-                    <button className="btn btn-primary col-md-5 mx-auto ">Submit</button>
-                    
+                    </div> 
                 </form>
+              {/* {  <button className="btn btn-primary col-md-5 mx-auto ">Add</button>} */}
+                    <button className="btn btn-primary col-md-10 ms-5" onClick={onsubmit}>Submit</button>
             </div>
              <Print inputes = {inputs} />
         </div>

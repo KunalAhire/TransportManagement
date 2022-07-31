@@ -2,9 +2,9 @@ import React, { useRef, useContext, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import Context from '../context/Context';
 export const Print = (props) => {
-    const { total, details } = useContext(Context);
+    const {details, items, totalAmt } = useContext(Context);
     const { Tservice, Phnumber, address } = details
-    const { from, to, transportCharge, serviceCharge, quantity, gst } = props.inputes;
+    const { from, to } = props.inputes;
     const componentRef = useRef();
     const handleclick = useReactToPrint({
         content: () => componentRef.current,
@@ -19,22 +19,20 @@ export const Print = (props) => {
         <div className='w-50 bg-light' >
             <div className='container border border-2 my-3' style={{ width: '95%' }} ref={componentRef}>
                 <div className='text-center mt-1 fs-6'>
-                    <h2><i class="fa-solid fa-truck-moving"></i> {Tservice}</h2>
-                    <p><i class="fa-solid fa-phone"></i> {Phnumber} <i class="fa-solid fa-location-dot"></i> {address}</p>
+                    <h2><i className="fa-solid fa-truck-moving"></i> {Tservice}</h2>
+                    <p><i className="fa-solid fa-phone"></i> {Phnumber} <i className="fa-solid fa-location-dot"></i> {address}</p>
                 </div>
                 <hr />
                 <div>
-                    <div class="d-flex justify-content-start">From,</div>
-                    <div class="d-flex justify-content-start">{from}</div>
-                    <div class="d-flex justify-content-end">To,</div>
-                    <div class="d-flex justify-content-end">{to}</div>
+                    <div className="d-flex justify-content-start">From,<br />{from}</div>
+                    <div className="d-flex justify-content-end">To,<br />{to}</div>
                 </div>
                 <hr />
                 <table className='table table-striped'>
-                    <caption> {date}</caption>
-
+                    <caption>{date}</caption>
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Transport Charge</th>
                             <th>Service Charge</th>
                             <th>Quantity</th>
@@ -43,20 +41,38 @@ export const Print = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        {/* <tr>
                             <td>{transportCharge}</td>
                             <td>{serviceCharge}</td>
                             <td>{quantity}</td>
                             <td>{gst}</td>
                             <td>{total}</td>
-                        </tr>
+                        </tr> */}
+
+                        {
+                            items ? items.map((item, index) => {
+                                return <tr key={index}>
+                                    <td>{item[index].id}</td>
+                                    <td>{item[index].itransportCharge}</td>
+                                    <td>{item[index].iserviceCharge}</td>
+                                    <td>{item[index].iquantity}</td>
+                                    <td>{item[index].igst}</td>
+                                    <td>{item[index].total}</td>
+                                </tr>
+                            }) : null
+                        }
                     </tbody>
                 </table>
                 <hr />
-                <div class="d-flex">
-                    <div class="me-auto p-2">Service Provider _ _ _ _ _</div>
-                    <div class="p-2">Costumer _ _ _ _ _</div>
-                </div>
+                <table className='table'>
+                    <thead>
+                    <tr>
+                        <th>Service Provider _ _ _ _ _</th>
+                        <th>Costumer _ _ _ _ _</th>
+                        <th>Total: {totalAmt}</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
             <button className='btn btn-primary m-3' onClick={handleclick}>print</button>
         </div>

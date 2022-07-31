@@ -3,17 +3,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from './Components/Nav';
 import MainApp from './MainApp';
 import Appstate from './context/Appstate';
+import Login from './Components/Login';
+import Register from './Components/Register';
 
 function App() {
   return (
     <Appstate >
       <BrowserRouter>
         < Nav />
-        <div className='container'>
           <Routes>
-            <Route path='/' element={<MainApp />} />
+            <Route path='/' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/mainpage' element={<MainApp />} />
           </Routes>
-        </div>
       </BrowserRouter>
     </Appstate>
   );
