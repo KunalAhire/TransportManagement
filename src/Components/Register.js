@@ -1,15 +1,17 @@
-import React, {useState} from 'react'
-
+import React, { useState, useContext } from 'react'
+import Context from '../context/Context';
 const Register = () => {
-    const [userDetails, setuserDetails] = useState({ transportServiceName : '',email: '', password: '' });
-
-  const onchange = (e) => {
-    setuserDetails({ ...userDetails, [e.target.name]: e.target.value });
-    console.log(userDetails);
-  }
-  const handleClick = () =>{
+    const {Adduser} = useContext(Context)
     
-  }
+    const [userDetails, setuserDetails] = useState({ transportServiceName: '', email: '', password: '' });
+
+    const onchange = (e) => {
+        setuserDetails({ ...userDetails, [e.target.name]: e.target.value });
+       // console.log(userDetails);
+    }
+    const handleClick = () => {
+        Adduser(userDetails.transportServiceName, userDetails.email, userDetails.password)
+    }
     return (
         <section className="vh-100" style={{ backgroundColor: "#eee" }}>
             <div className="container h-100">
@@ -27,7 +29,7 @@ const Register = () => {
                                             <div className="d-flex flex-row align-items-center mb-4">
                                                 <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                                                 <div className="form-outline flex-fill mb-0">
-                                                    <input type="text" id="transportServiceName" onChange={onchange} name={'transportServiceName'}  className="form-control" />
+                                                    <input type="text" id="transportServiceName" onChange={onchange} name={'transportServiceName'} className="form-control" />
                                                     <label className="form-label" htmlFor="transportServiceName">Transport Service Name</label>
                                                 </div>
                                             </div>

@@ -7,16 +7,6 @@ const Appstate = (props) => {
     const [items, setitems] = useState([])
     const [totalAmt, settotalAmt] = useState(0)
     const [details, setdetails] = useState({ Tservice: 'Amazon Transport', Phnumber: '1234567890', address: 'balaji nagar shingave' })
-  //  const [userDetails, setuserDetails] = useState(userData)
-
-    // const userLogin = (email, password)=>{
-    //     userDetails.map(items=>{
-    //         if(email === items.Email && password === items.Password){
-    //             <MainApp />
-    //           //  console.log(items)
-    //         }
-    // })
-    // }
 
     const addBill = (transportCharge, serviceCharge, gst, quantity) => {
         const totalBill = parseInt(transportCharge) + parseInt(serviceCharge);
@@ -37,8 +27,17 @@ const Appstate = (props) => {
         //console.log(totalAmt)
     }
 
+    const Adduser = (transportService, email, password) =>{
+        const userId = userData.length + 1;
+        const newData = {id: userId, transportServiceName : transportService, Email: email , Password:password};
+        const json = JSON.stringify(newData);
+        console.log(json)
+        userData.push(newData)
+        console.log(userData)
+    }
+
     return (
-        <Context.Provider value={{ addBill, details, setdetails, Appstate, items, totalAmt, setitems, userData }}>
+        <Context.Provider value={{ addBill, details, setdetails, Appstate, items, totalAmt, setitems, userData, Adduser }}>
             {props.children}
         </Context.Provider>
     )
