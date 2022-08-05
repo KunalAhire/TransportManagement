@@ -32,7 +32,8 @@ const Appstate = (props) => {
         const newData = {id: userId, transportServiceName : transportService, Email: email , Password:password};
         const json = JSON.stringify(newData);
         console.log(json)
-        userData.push(newData)
+        userData.push(json.Email)
+        localStorage.setItem('userData', newData.Email)
         console.log(userData)
     }
 
